@@ -15,4 +15,20 @@ describe('ArticleService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
+
+  it('should be not throw on create article', () => {
+    expect(() =>
+      service.create({
+        events: [],
+        featured: true,
+        imageUrl: '',
+        launches: [],
+        newsSite: '',
+        publishedAt: '',
+        summary: '',
+        title: '',
+        url: '',
+      }),
+    ).not.toThrow();
+  });
 });
