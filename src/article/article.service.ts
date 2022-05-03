@@ -1,37 +1,28 @@
 import { Injectable } from '@nestjs/common';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
-import { Article } from './entities/article.entity';
+import { RepositoryService } from './repository/repository.service';
 
 @Injectable()
 export class ArticleService {
-  data: Article[];
-  id: number;
-  constructor() {
-    this.data = [];
-    this.id = 1;
-  }
+  constructor(private repositoryArticle: RepositoryService) {}
   create(createArticleDto: CreateArticleDto) {
-    this.data.push(Object.assign(createArticleDto, { id: this.id++ }));
+    return this.repositoryArticle.create(createArticleDto);
   }
 
   findAll() {
-    return this.data;
+    return this.repositoryArticle.findAll();
   }
 
   findOne(id: number) {
-    return this.data.find((d) => d.id === id);
+    return this.repositoryArticle.findOne(id);
   }
 
   update(id: number, updateArticleDto: UpdateArticleDto) {
-    const index = this.data.findIndex((d) => d.id === id);
-    if (index < 0) return;
-    return Object.assign(this.data[index], updateArticleDto);
+    return this.repositoryArticle.update(id, updateArticleDto);
   }
 
   remove(id: number) {
-    const index = this.data.findIndex((d) => d.id === id);
-    if (index < 0) return;
-    this.data.splice(index, 1);
+    return this.repositoryArticle.remove(id);
   }
 }
